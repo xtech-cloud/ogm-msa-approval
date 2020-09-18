@@ -55,6 +55,13 @@ call:
 	MICRO_REGISTRY=consul micro call omo.msa.approval Operator.Leave '{"operator":"001", "workflow":"5a105e8b9d40e1329780d62ea2265d8a"}'
 	# 操作员离开, 不存在
 	MICRO_REGISTRY=consul micro call omo.msa.approval Operator.Leave '{"operator":"001", "workflow":"5a105e8b9d40e1329780d62ea2265d8a"}'
+	# 提交任务
+	MICRO_REGISTRY=consul micro call omo.msa.approval Task.Submit '{"subject":"subject-1", "body": "boby-1", "workflow":"5a105e8b9d40e1329780d62ea2265d8a"}'
+	MICRO_REGISTRY=consul micro call omo.msa.approval Task.Submit '{"subject":"subject-2", "body": "boby-2", "workflow":"ad0234829205b9033196ba818f7a872b"}'
+	# 列举任务
+	MICRO_REGISTRY=consul micro call omo.msa.approval Task.List 
+	# 搜索任务
+	MICRO_REGISTRY=consul micro call omo.msa.approval Task.Search '{"workflow":"test"}'
 	# 删除工作流，无参数
 	MICRO_REGISTRY=consul micro call omo.msa.approval Workflow.Remove
 	# 删除工作流，不存在

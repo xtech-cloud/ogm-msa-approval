@@ -10,7 +10,7 @@ require (
 	github.com/micro/go-plugins/registry/etcdv3/v2 v2.3.0
 	github.com/satori/go.uuid v1.2.0
 	github.com/sirupsen/logrus v1.4.2
-	github.com/xtech-cloud/omo-msp-approval v1.6.0
+	github.com/xtech-cloud/omo-msp-approval v1.8.0
 	github.com/xtech-cloud/omo-msp-notification v1.0.0
 	gopkg.in/yaml.v2 v2.3.0
 	gorm.io/driver/mysql v1.0.1

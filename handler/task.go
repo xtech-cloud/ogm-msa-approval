@@ -200,6 +200,50 @@ func (this *Task) List(_ctx context.Context, _req *proto.TaskListRequest, _rsp *
 	return nil
 }
 
+func (this *Task) Search(_ctx context.Context, _req *proto.TaskSearchRequest, _rsp *proto.TaskSearchResponse) error {
+	logger.Infof("Received Task.Search, req is %v", _req)
+	_rsp.Status = &proto.Status{}
+
+	if "" == _req.Workflow{
+		_rsp.Status.Code = 1
+		_rsp.Status.Message = "workflow is required"
+		return nil
+	}
+
+	offset := int64(0)
+	count := int64(100)
+
+	if _req.Offset > 0 {
+		offset = _req.Offset
+	}
+
+	if _req.Count > 0 {
+		count = _req.Count
+	}
+
+	dao := model.NewJoinsDAO(nil)
+	query := &model.JoinsQuery{
+		State:    int(_req.State),
+		Workflow: _req.Workflow,
+	}
+	total, tasks, err := dao.SearchTask(offset, count, query)
+	if nil != err {
+		return nil
+	}
+
+	_rsp.Total = uint64(total)
+	_rsp.Entity = make([]*proto.TaskEntity, len(tasks))
+	for i, task := range tasks {
+		_rsp.Entity[i] = &proto.TaskEntity{
+			Uuid:    task.UUID,
+			Subject: task.Subject,
+			Body:    task.Body,
+			State:   proto.TaskStatus(task.State),
+		}
+	}
+	return nil
+}
+
 func (this *Task) Get(_ctx context.Context, _req *proto.TaskGetRequest, _rsp *proto.TaskGetResponse) error {
 	logger.Infof("Received Task.Get, req is %v", _req)
 	_rsp.Status = &proto.Status{}

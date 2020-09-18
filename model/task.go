@@ -115,6 +115,7 @@ func (this *TaskDAO) List(_offset int64, _count int64, _query *TaskQuery) (_tota
 	return
 }
 
+
 func (this *TaskDAO) QueryOne(_query *TaskQuery) (*Task, error) {
 	db := this.conn.DB.Model(&Task{})
 	hasWhere := false
