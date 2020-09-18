@@ -169,12 +169,6 @@ func (this *Task) List(_ctx context.Context, _req *proto.TaskListRequest, _rsp *
 	offset := int64(0)
 	count := int64(100)
 
-	if "" == _req.Workflow {
-		_rsp.Status.Code = 1
-		_rsp.Status.Message = "workflow is required"
-		return nil
-	}
-
 	if _req.Offset > 0 {
 		offset = _req.Offset
 	}
