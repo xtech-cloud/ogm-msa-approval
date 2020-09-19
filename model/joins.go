@@ -15,6 +15,9 @@ func NewJoinsDAO(_conn *Conn) *JoinsDAO {
 }
 
 type JoinsQuery struct {
+    Subject string
+    Body string
+    Meta string
     Workflow string
     State int
 }
@@ -27,7 +30,16 @@ func (this *JoinsDAO) SearchTask(_offset int64, _count int64, _query *JoinsQuery
 
 	db := this.conn.DB
     db = db.Joins("JOIN msa_approval_workflow ON msa_approval_workflow.uuid = msa_approval_task.workflow")
-	db = db.Where("msa_approval_workflow.name LIKE ?", _query.Workflow + "%")
+	db = db.Where("msa_approval_workflow.name LIKE ?", "%" + _query.Workflow + "%")
+	if "" != _query.Subject{
+        db = db.Where("msa_approval_task.subject LIKE ?", "%" + _query.Subject+ "%")
+	}
+	if "" != _query.Body{
+        db = db.Where("msa_approval_task.body LIKE ?", "%" + _query.Body + "%")
+	}
+	if "" != _query.Meta{
+        db = db.Where("msa_approval_task.meta LIKE ?", "%" + _query.Meta + "%")
+	}
 	if 0 != _query.State{
 		db = db.Where("msa_approval_task.state = ?", _query.State)
 	}

@@ -11,7 +11,8 @@ type Task struct {
 	UUID      string `gorm:"column:uuid;type:char(32);not null;unique;primaryKey"`
 	Subject   string `gorm:"column:subject;type:varchar(512);not null"`
 	Body      string `gorm:"column:body;type:text;not null"`
-	Workflow  string `gorm:"column:workflow;type:varchar(256);not null"`
+	Meta      string `gorm:"column:meta;type:text;not null"`
+	Workflow  string `gorm:"column:workflow;type:char(32);not null"`
 	State     int    `gorm:"column:state"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
@@ -25,11 +26,11 @@ func (Task) TableName() string {
 }
 
 type TaskQuery struct {
-	UUID string
-    Subject string
-    Body string
-    Workflow string
-    State int
+	Subject  string
+	Body     string
+	Meta     string
+	Workflow string
+	State    int
 }
 
 type TaskDAO struct {
@@ -95,32 +96,51 @@ func (this *TaskDAO) Delete(_uuid string) error {
 }
 
 func (this *TaskDAO) List(_offset int64, _count int64, _query *TaskQuery) (_total int64, _task []*Task, _err error) {
-    _err = nil
-    _total = int64(0)
-    _task = make([]*Task, 0)
+	_err = nil
+	_total = int64(0)
+	_task = make([]*Task, 0)
 
 	db := this.conn.DB.Model(&Task{})
-	if "" != _query.Workflow{
+	if "" != _query.Workflow {
 		db = db.Where("workflow = ?", _query.Workflow)
 	}
-	if 0 != _query.State{
+	if 0 != _query.State {
 		db = db.Where("state = ?", _query.State)
 	}
 
 	_err = db.Count(&_total).Error
-    if nil != _err {
-        return
-    }
+	if nil != _err {
+		return
+	}
 	_err = db.Offset(int(_offset)).Limit(int(_count)).Order("created_at desc").Find(&_task).Error
 	return
 }
 
+func (this *TaskDAO) Get(_uuid string) (*Task, error) {
+	db := this.conn.DB.Model(&Task{})
+	db = db.Where("uuid = ?", _uuid)
+
+	var Task Task
+	err := db.First(&Task).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return nil, ErrTaskNotFound
+	}
+	return &Task, err
+}
 
 func (this *TaskDAO) QueryOne(_query *TaskQuery) (*Task, error) {
 	db := this.conn.DB.Model(&Task{})
 	hasWhere := false
-	if "" != _query.UUID {
-		db = db.Where("uuid = ?", _query.UUID)
+	if "" != _query.Subject{
+		db = db.Where("subject LIKE ?", "%"+_query.Subject +"%")
+		hasWhere = true
+	}
+	if "" != _query.Body{
+		db = db.Where("body LIKE ?", "%"+_query.Body+"%")
+		hasWhere = true
+	}
+	if "" != _query.Meta{
+		db = db.Where("meta LIKE ?", "%"+_query.Meta+"%")
 		hasWhere = true
 	}
 	if !hasWhere {

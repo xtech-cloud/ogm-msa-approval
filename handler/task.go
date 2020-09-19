@@ -54,6 +54,7 @@ func (this *Task) Submit(_ctx context.Context, _req *proto.TaskSubmitRequest, _r
 		UUID:     uuid,
 		Subject:  _req.Subject,
 		Body:     _req.Body,
+		Meta:     _req.Meta,
 		Workflow: _req.Workflow,
 		State:    int(proto.TaskStatus_TASK_STATUS_PENDING),
 	}
@@ -93,10 +94,7 @@ func (this *Task) Accept(_ctx context.Context, _req *proto.TaskAcceptRequest, _r
 	}
 
 	dao := model.NewTaskDAO(nil)
-	query := model.TaskQuery{
-		UUID: _req.Uuid,
-	}
-	task, err := dao.QueryOne(&query)
+	task, err := dao.Get(_req.Uuid)
 	if nil != err {
 		if errors.Is(err, model.ErrTaskNotFound) {
 			_rsp.Status.Code = 2
@@ -136,10 +134,7 @@ func (this *Task) Reject(_ctx context.Context, _req *proto.TaskRejectRequest, _r
 	}
 
 	dao := model.NewTaskDAO(nil)
-	query := model.TaskQuery{
-		UUID: _req.Uuid,
-	}
-	task, err := dao.QueryOne(&query)
+	task, err := dao.Get(_req.Uuid)
 	if nil != err {
 		if errors.Is(err, model.ErrTaskNotFound) {
 			_rsp.Status.Code = 2
@@ -204,7 +199,7 @@ func (this *Task) Search(_ctx context.Context, _req *proto.TaskSearchRequest, _r
 	logger.Infof("Received Task.Search, req is %v", _req)
 	_rsp.Status = &proto.Status{}
 
-	if "" == _req.Workflow{
+	if "" == _req.Workflow {
 		_rsp.Status.Code = 1
 		_rsp.Status.Message = "workflow is required"
 		return nil
@@ -224,6 +219,9 @@ func (this *Task) Search(_ctx context.Context, _req *proto.TaskSearchRequest, _r
 	dao := model.NewJoinsDAO(nil)
 	query := &model.JoinsQuery{
 		State:    int(_req.State),
+		Subject:  _req.Subject,
+		Body:     _req.Body,
+		Meta:     _req.Meta,
 		Workflow: _req.Workflow,
 	}
 	total, tasks, err := dao.SearchTask(offset, count, query)
@@ -238,6 +236,7 @@ func (this *Task) Search(_ctx context.Context, _req *proto.TaskSearchRequest, _r
 			Uuid:    task.UUID,
 			Subject: task.Subject,
 			Body:    task.Body,
+			Meta:    task.Meta,
 			State:   proto.TaskStatus(task.State),
 		}
 	}
@@ -255,10 +254,7 @@ func (this *Task) Get(_ctx context.Context, _req *proto.TaskGetRequest, _rsp *pr
 	}
 
 	dao := model.NewTaskDAO(nil)
-	query := model.TaskQuery{
-		UUID: _req.Uuid,
-	}
-	task, err := dao.QueryOne(&query)
+	task, err := dao.Get(_req.Uuid)
 	if nil != err {
 		if errors.Is(err, model.ErrTaskNotFound) {
 			_rsp.Status.Code = 2
@@ -272,6 +268,7 @@ func (this *Task) Get(_ctx context.Context, _req *proto.TaskGetRequest, _rsp *pr
 		Uuid:    task.UUID,
 		Subject: task.Subject,
 		Body:    task.Body,
+		Meta:    task.Meta,
 		State:   proto.TaskStatus(task.State),
 	}
 	return nil
