@@ -25,6 +25,7 @@ func (Operator) TableName() string {
 type OperatorQuery struct {
 	UUID     string
 	Workflow string
+    Name string
 }
 
 type OperatorDAO struct {
@@ -97,6 +98,9 @@ func (this *OperatorDAO) List(_offset int64, _count int64, _query *OperatorQuery
 	db := this.conn.DB.Model(&Operator{})
 	if "" != _query.Workflow {
 		db = db.Where("workflow = ?", _query.Workflow)
+	}
+	if "" != _query.Name{
+		db = db.Where("name = ?", _query.Name)
 	}
 
 	_err = db.Count(&_total).Error

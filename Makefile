@@ -51,6 +51,10 @@ call:
 	MICRO_REGISTRY=consul micro call omo.msa.approval Operator.Join '{"operator":"001", "workflow":"5a105e8b9d40e1329780d62ea2265d8a"}'
 	# 操作员加入, 已存在
 	MICRO_REGISTRY=consul micro call omo.msa.approval Operator.Join '{"operator":"001", "workflow":"5a105e8b9d40e1329780d62ea2265d8a"}'
+	# 列举操作员
+	MICRO_REGISTRY=consul micro call omo.msa.approval Operator.List '{"workflow":"5a105e8b9d40e1329780d62ea2265d8a"}'
+	# 过滤工作流
+	MICRO_REGISTRY=consul micro call omo.msa.approval Operator.Filter '{"operator":"001"}'
 	# 操作员离开
 	MICRO_REGISTRY=consul micro call omo.msa.approval Operator.Leave '{"operator":"001", "workflow":"5a105e8b9d40e1329780d62ea2265d8a"}'
 	# 操作员离开, 不存在

@@ -125,3 +125,41 @@ func (this *Operator) List(_ctx context.Context, _req *proto.OperatorListRequest
 	}
 	return nil
 }
+
+func (this *Operator) Filter(_ctx context.Context, _req *proto.OperatorFilterRequest, _rsp *proto.OperatorFilterResponse) error {
+	logger.Infof("Received Operator.Filter, req is %v", _req)
+	_rsp.Status = &proto.Status{}
+
+	offset := int64(0)
+	count := int64(100)
+
+	if "" == _req.Operator{
+		_rsp.Status.Code = 1
+		_rsp.Status.Message = "operator is required"
+		return nil
+	}
+
+	if _req.Offset > 0 {
+		offset = _req.Offset
+	}
+
+	if _req.Count > 0 {
+		count = _req.Count
+	}
+
+	dao := model.NewOperatorDAO(nil)
+	query := &model.OperatorQuery{
+		Name: _req.Operator,
+	}
+	total, operators, err := dao.List(offset, count, query)
+	if nil != err {
+		return nil
+	}
+
+	_rsp.Total = uint64(total)
+	_rsp.Entity = make([]string, len(operators))
+	for i, operator:= range operators{
+		_rsp.Entity[i] = operator.Workflow
+	}
+	return nil
+}
