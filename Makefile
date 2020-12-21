@@ -49,6 +49,8 @@ call:
 	MICRO_REGISTRY=consul micro call omo.msa.approval Workflow.Get '{"name":"test2"}'
 	# 操作员加入
 	MICRO_REGISTRY=consul micro call omo.msa.approval Operator.Join '{"operator":"001", "workflow":"5a105e8b9d40e1329780d62ea2265d8a"}'
+	MICRO_REGISTRY=consul micro call omo.msa.approval Operator.BatchJoin '{"operator":["002", "003"], "workflow":"5a105e8b9d40e1329780d62ea2265d8a"}'
+	MICRO_REGISTRY=consul micro call omo.msa.approval Operator.BatchJoin '{"operator":["003", "004"], "workflow":"5a105e8b9d40e1329780d62ea2265d8a"}'
 	# 操作员加入, 已存在
 	MICRO_REGISTRY=consul micro call omo.msa.approval Operator.Join '{"operator":"001", "workflow":"5a105e8b9d40e1329780d62ea2265d8a"}'
 	# 列举操作员
@@ -59,6 +61,8 @@ call:
 	MICRO_REGISTRY=consul micro call omo.msa.approval Operator.Leave '{"operator":"001", "workflow":"5a105e8b9d40e1329780d62ea2265d8a"}'
 	# 操作员离开, 不存在
 	MICRO_REGISTRY=consul micro call omo.msa.approval Operator.Leave '{"operator":"001", "workflow":"5a105e8b9d40e1329780d62ea2265d8a"}'
+	MICRO_REGISTRY=consul micro call omo.msa.approval Operator.BatchLeave '{"operator":["003", "004"], "workflow":"5a105e8b9d40e1329780d62ea2265d8a"}'
+	MICRO_REGISTRY=consul micro call omo.msa.approval Operator.BatchLeave '{"operator":["002", "003"], "workflow":"5a105e8b9d40e1329780d62ea2265d8a"}'
 	# 提交任务
 	MICRO_REGISTRY=consul micro call omo.msa.approval Task.Submit '{"subject":"subject-1", "body": "boby-1", "workflow":"5a105e8b9d40e1329780d62ea2265d8a"}'
 	MICRO_REGISTRY=consul micro call omo.msa.approval Task.Submit '{"subject":"subject-2", "body": "boby-2", "workflow":"ad0234829205b9033196ba818f7a872b"}'
