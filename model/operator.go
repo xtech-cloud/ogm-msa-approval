@@ -42,9 +42,13 @@ func NewOperatorDAO(_conn *Conn) *OperatorDAO {
 	}
 }
 
-func (this *OperatorDAO) Count() (int64, error) {
+func (this *OperatorDAO) Count(_query *OperatorQuery) (int64, error) {
 	var count int64
-	err := this.conn.DB.Model(&Operator{}).Count(&count).Error
+	db := this.conn.DB.Model(&Operator{})
+    if "" != _query.Workflow {
+        db = db.Where("workflow = ?", _query.Workflow)
+    }
+	err := db.Count(&count).Error
 	return count, err
 }
 

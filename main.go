@@ -42,6 +42,7 @@ func main() {
 	proto.RegisterWorkflowHandler(service.Server(), new(handler.Workflow))
 	proto.RegisterOperatorHandler(service.Server(), new(handler.Operator))
 	proto.RegisterTaskHandler(service.Server(), new(handler.Task))
+	proto.RegisterActionHandler(service.Server(), new(handler.Action))
 
 	app, _ := filepath.Abs(os.Args[0])
 

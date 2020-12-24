@@ -493,6 +493,16 @@ github.com/xtech-cloud/omo-msp-approval v1.10.0 h1:tTLGhQL8XYveAZHF96AO6HrlCu9hb
 github.com/xtech-cloud/omo-msp-approval v1.10.0/go.mod h1:K93K15i/+eMRQbgCoY35txruLrmQQyXeY0KT7w4+BGE=
 github.com/xtech-cloud/omo-msp-approval v1.11.0 h1:XpA2jb+0UWuuER3vzCEuvexyp8i87MpO4koZOkbT/gs=
 github.com/xtech-cloud/omo-msp-approval v1.11.0/go.mod h1:K93K15i/+eMRQbgCoY35txruLrmQQyXeY0KT7w4+BGE=
+github.com/xtech-cloud/omo-msp-approval v1.12.0 h1:tVzc6Hh8jpAuyv4oQzp80wq0PW6Lr99sZ6XCZKZJlsA=
+github.com/xtech-cloud/omo-msp-approval v1.12.0/go.mod h1:K93K15i/+eMRQbgCoY35txruLrmQQyXeY0KT7w4+BGE=
+github.com/xtech-cloud/omo-msp-approval v1.13.0 h1:ofx59LTMD6TPRgxX8Eo/qFkH1Z+1Dv1ZyHaGSN5vSkA=
+github.com/xtech-cloud/omo-msp-approval v1.13.0/go.mod h1:K93K15i/+eMRQbgCoY35txruLrmQQyXeY0KT7w4+BGE=
+github.com/xtech-cloud/omo-msp-approval v1.14.0 h1:afNXz0KP3EInScRNpUVqqO8+BfO7t59O5fhpMZg0Rac=
+github.com/xtech-cloud/omo-msp-approval v1.14.0/go.mod h1:K93K15i/+eMRQbgCoY35txruLrmQQyXeY0KT7w4+BGE=
+github.com/xtech-cloud/omo-msp-approval v1.15.0 h1:JsLrZOKrTYrPxilGhQkVUzziUUW2nqy0eA18gF8VIZc=
+github.com/xtech-cloud/omo-msp-approval v1.15.0/go.mod h1:K93K15i/+eMRQbgCoY35txruLrmQQyXeY0KT7w4+BGE=
+github.com/xtech-cloud/omo-msp-approval v1.16.0 h1:47XlbTjHWVYOB+sob9A+Ss7lqf+FE/TjzEELas9PQP8=
+github.com/xtech-cloud/omo-msp-approval v1.16.0/go.mod h1:K93K15i/+eMRQbgCoY35txruLrmQQyXeY0KT7w4+BGE=
 github.com/xtech-cloud/omo-msp-file v1.0.6 h1:j1zWiMZFxep9xUuEITF9FNY13fwqTBcqEP35Hhk7ro4=
 github.com/xtech-cloud/omo-msp-file v1.0.6/go.mod h1:7VY9hq6ibl+TX5Plwjl6tgRaBF25lyOqbNq1MCq+1OA=
 github.com/xtech-cloud/omo-msp-file v1.0.8 h1:GMwpGUkCrpuoaUzU1uhjTz5xlh1S4pRovA3VzLaj2vQ=
