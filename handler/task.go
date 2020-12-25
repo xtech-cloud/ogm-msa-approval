@@ -190,6 +190,7 @@ func (this *Task) List(_ctx context.Context, _req *proto.TaskListRequest, _rsp *
 			Uuid:      task.UUID,
 			Subject:   task.Subject,
 			Body:      task.Body,
+			Meta:      task.Meta,
 			State:     proto.TaskStatus(task.State),
 			UpdatedAt: task.UpdatedAt.UTC().Unix(),
 		}
