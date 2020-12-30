@@ -142,6 +142,7 @@ func (this *Task) Reject(_ctx context.Context, _req *proto.TaskRejectRequest, _r
 		Task:     _req.Uuid,
 		Operator: _req.Operator,
 		State:    int(proto.ActionStatus_ACTION_STATUS_REJECTED),
+		Reason:   _req.Reason,
 	}
 	err := dao.Upsert(&action)
 	if nil != err {
@@ -310,8 +311,8 @@ func (this *Task) updateTaskStatus(_task string) error {
 	// 获取工作流实体
 	daoWorkflow := model.NewWorkflowDAO(nil)
 	workflow, err := daoWorkflow.QueryOne(&model.WorkflowQuery{
-        UUID: task.Workflow,
-    })
+		UUID: task.Workflow,
+	})
 	if nil != err {
 		return err
 	}
@@ -324,7 +325,7 @@ func (this *Task) updateTaskStatus(_task string) error {
 		} else if countAccepted == countOperator {
 			// 全票模式所有操作员通过，任务通过
 			taskState = proto.TaskStatus_TASK_STATUS_ACCEPTED
-		} 
+		}
 	} else if workflow.Mode == int(proto.WorkflowMode_WORKFLOW_MODE_ANY) {
 		if countAccepted > 0 {
 			// 单票模式下只要有一个操作员通过，任务通过
@@ -342,6 +343,6 @@ func (this *Task) updateTaskStatus(_task string) error {
 			taskState = proto.TaskStatus_TASK_STATUS_REJECTED
 		}
 	}
-    task.State = int(taskState)
-    return daoTask.Update(task)
+	task.State = int(taskState)
+	return daoTask.Update(task)
 }

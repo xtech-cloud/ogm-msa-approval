@@ -11,6 +11,7 @@ type Action struct {
 	Task      string `gorm:"column:task;type:char(32);not null"`
 	Operator  string `gorm:"column:operator;type:char(32);not null"`
 	State     int    `gorm:"column:state"`
+	Reason    string `gorm:"column:reason;type:text"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
@@ -51,11 +52,11 @@ func (this *ActionDAO) Count() (int64, error) {
 
 func (this *ActionDAO) Upsert(_action *Action) error {
 	db := this.conn.DB.Model(&Action{})
-    err := db.Clauses(clause.OnConflict{
+	err := db.Clauses(clause.OnConflict{
 		Columns:   []clause.Column{{Name: "uuid"}},
-		DoUpdates: clause.AssignmentColumns([]string{"state"}),
+		DoUpdates: clause.AssignmentColumns([]string{"state", "reason"}),
 	}).Create(_action).Error
-    return err
+	return err
 }
 
 func (this *ActionDAO) Delete(_uuid string) error {
@@ -101,7 +102,7 @@ func (this *ActionDAO) CountWithState(_task string, _state int) (_count int64, _
 	_count = int64(0)
 
 	db := this.conn.DB.Model(&Action{})
-    db = db.Where("task = ? AND state = ?", _task, _state)
+	db = db.Where("task = ? AND state = ?", _task, _state)
 	_err = db.Count(&_count).Error
-    return
+	return
 }

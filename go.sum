@@ -503,6 +503,8 @@ github.com/xtech-cloud/omo-msp-approval v1.15.0 h1:JsLrZOKrTYrPxilGhQkVUzziUUW2n
 github.com/xtech-cloud/omo-msp-approval v1.15.0/go.mod h1:K93K15i/+eMRQbgCoY35txruLrmQQyXeY0KT7w4+BGE=
 github.com/xtech-cloud/omo-msp-approval v1.16.0 h1:47XlbTjHWVYOB+sob9A+Ss7lqf+FE/TjzEELas9PQP8=
 github.com/xtech-cloud/omo-msp-approval v1.16.0/go.mod h1:K93K15i/+eMRQbgCoY35txruLrmQQyXeY0KT7w4+BGE=
+github.com/xtech-cloud/omo-msp-approval v1.17.0 h1:/vFr5/KIzoBwpUtX+yRyVleOQaZxj+prvJwISMCZ1GU=
+github.com/xtech-cloud/omo-msp-approval v1.17.0/go.mod h1:K93K15i/+eMRQbgCoY35txruLrmQQyXeY0KT7w4+BGE=
 github.com/xtech-cloud/omo-msp-file v1.0.6 h1:j1zWiMZFxep9xUuEITF9FNY13fwqTBcqEP35Hhk7ro4=
 github.com/xtech-cloud/omo-msp-file v1.0.6/go.mod h1:7VY9hq6ibl+TX5Plwjl6tgRaBF25lyOqbNq1MCq+1OA=
 github.com/xtech-cloud/omo-msp-file v1.0.8 h1:GMwpGUkCrpuoaUzU1uhjTz5xlh1S4pRovA3VzLaj2vQ=

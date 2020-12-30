@@ -45,6 +45,7 @@ func (this *Action) Query(_ctx context.Context, _req *proto.ActionQueryRequest, 
 			Task:      action.Task,
 			Operator:  action.Operator,
 			State:     proto.ActionStatus(action.State),
+			Reason:    action.Reason,
 			UpdatedAt: action.UpdatedAt.UTC().Unix(),
 		}
 	}

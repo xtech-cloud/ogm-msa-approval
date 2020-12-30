@@ -72,7 +72,7 @@ call:
 	echo # 列举任务
 	MICRO_REGISTRY=consul micro call omo.msa.approval Task.List 
 	echo # 拒绝任务
-	MICRO_REGISTRY=consul micro call omo.msa.approval Task.Reject '{"uuid":"8a8c26af4df5ac2c617688fd84218899", "operator":"001"}'
+	MICRO_REGISTRY=consul micro call omo.msa.approval Task.Reject '{"uuid":"8a8c26af4df5ac2c617688fd84218899", "operator":"001", "reason":"this is reason"}'
 	echo # 查询记录
 	MICRO_REGISTRY=consul micro call omo.msa.approval Action.Query '{"task":"8a8c26af4df5ac2c617688fd84218899"}'
 	echo # 列举任务
