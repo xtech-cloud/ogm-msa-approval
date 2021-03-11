@@ -39,6 +39,7 @@ func main() {
 	publisher.DefaultPublisher = micro.NewPublisher(config.Schema.Service.Name+".notification", service.Client())
 
 	// Register Handler
+	proto.RegisterHealthyHandler(service.Server(), new(handler.Healthy))
 	proto.RegisterWorkflowHandler(service.Server(), new(handler.Workflow))
 	proto.RegisterOperatorHandler(service.Server(), new(handler.Operator))
 	proto.RegisterTaskHandler(service.Server(), new(handler.Task))

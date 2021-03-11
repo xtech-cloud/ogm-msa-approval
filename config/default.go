@@ -2,7 +2,7 @@ package config
 
 const defaultYAML string = `
 service:
-  name: omo.msa.approval
+  name: omo.api.msa.approval
   address: :9606
   ttl: 15
   interval: 10
