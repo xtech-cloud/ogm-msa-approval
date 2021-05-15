@@ -22,7 +22,7 @@ var ErrTaskExists = errors.New("task exists")
 var ErrTaskNotFound = errors.New("task not found")
 
 func (Task) TableName() string {
-	return "msa_approval_task"
+	return "ogm_approval_task"
 }
 
 type TaskQuery struct {

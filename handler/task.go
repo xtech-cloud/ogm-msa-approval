@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"omo-msa-approval/model"
-	"omo-msa-approval/publisher"
 
 	"github.com/micro/go-micro/v2/logger"
 	proto "github.com/xtech-cloud/omo-msp-approval/proto/approval"
@@ -71,11 +70,24 @@ func (this *Task) Submit(_ctx context.Context, _req *proto.TaskSubmitRequest, _r
 		}
 	}
 
-	// 发布消息
-	ctx := buildNotifyContext(_ctx, "root")
-	publisher.Publish(ctx, "/task/submit", _req, _rsp)
 	return nil
 }
+
+func (this *Task) Cancel(_ctx context.Context, _req *proto.TaskCancelRequest, _rsp *proto.BlankResponse) error {
+	logger.Infof("Received Task.Cancel, req is %v", _req)
+	_rsp.Status = &proto.Status{}
+
+	if "" == _req.Uuid {
+		_rsp.Status.Code = 1
+		_rsp.Status.Message = "uuid is required"
+		return nil
+	}
+
+    //TODO 实现撤销逻辑
+
+	return nil
+}
+
 
 func (this *Task) Accept(_ctx context.Context, _req *proto.TaskAcceptRequest, _rsp *proto.BlankResponse) error {
 	logger.Infof("Received Task.Accept, req is %v", _req)
@@ -113,9 +125,6 @@ func (this *Task) Accept(_ctx context.Context, _req *proto.TaskAcceptRequest, _r
 		return err
 	}
 
-	// 发布消息
-	ctx := buildNotifyContext(_ctx, "root")
-	publisher.Publish(ctx, "/task/accept", _req, _rsp)
 	return nil
 }
 
@@ -153,9 +162,6 @@ func (this *Task) Reject(_ctx context.Context, _req *proto.TaskRejectRequest, _r
 	if nil != err {
 		return err
 	}
-	// 发布消息
-	ctx := buildNotifyContext(_ctx, "root")
-	publisher.Publish(ctx, "/task/reject", _req, _rsp)
 	return nil
 }
 

@@ -19,7 +19,7 @@ var ErrOperatorExists = errors.New("operator exists")
 var ErrOperatorNotFound = errors.New("operator not found")
 
 func (Operator) TableName() string {
-	return "msa_approval_operator"
+	return "ogm_approval_operator"
 }
 
 type OperatorQuery struct {

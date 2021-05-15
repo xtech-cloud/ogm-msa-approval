@@ -5,7 +5,6 @@ import (
 	"errors"
 	"omo-msa-approval/config"
 	"omo-msa-approval/model"
-	"omo-msa-approval/publisher"
 
 	"github.com/micro/go-micro/v2/logger"
 	proto "github.com/xtech-cloud/omo-msp-approval/proto/approval"
@@ -13,7 +12,7 @@ import (
 
 type Workflow struct{}
 
-func (this *Workflow) Make(_ctx context.Context, _req *proto.WorkflowMakeRequest, _rsp *proto.BlankResponse) error {
+func (this *Workflow) Make(_ctx context.Context, _req *proto.WorkflowMakeRequest, _rsp *proto.WorkflowMakeResponse) error {
 	logger.Infof("Received Workflow.Make, req is %v", _req)
 	_rsp.Status = &proto.Status{}
 
@@ -53,9 +52,8 @@ func (this *Workflow) Make(_ctx context.Context, _req *proto.WorkflowMakeRequest
 		}
 	}
 
-	// 发布消息
-	ctx := buildNotifyContext(_ctx, "root")
-	publisher.Publish(ctx, "/workflow/make", _req, _rsp)
+    _rsp.Uuid = workflow.UUID
+
 	return nil
 }
 
@@ -118,9 +116,6 @@ func (this *Workflow) Remove(_ctx context.Context, _req *proto.WorkflowRemoveReq
 			return err
 		}
 	}
-	// 发布消息
-	ctx := buildNotifyContext(_ctx, "root")
-	publisher.Publish(ctx, "/Workflow/remove", _req, _rsp)
 	return nil
 }
 

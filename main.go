@@ -7,7 +7,6 @@ import (
 	"omo-msa-approval/config"
 	"omo-msa-approval/handler"
 	"omo-msa-approval/model"
-	"omo-msa-approval/publisher"
 	"os"
 	"path/filepath"
 	"time"
@@ -34,9 +33,6 @@ func main() {
 
 	// Initialise service
 	service.Init()
-
-	// Register publisher
-	publisher.DefaultPublisher = micro.NewPublisher(config.Schema.Service.Name+".notification", service.Client())
 
 	// Register Handler
 	proto.RegisterHealthyHandler(service.Server(), new(handler.Healthy))

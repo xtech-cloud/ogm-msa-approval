@@ -17,7 +17,7 @@ type Action struct {
 }
 
 func (Action) TableName() string {
-	return "msa_approval_action"
+	return "ogm_approval_action"
 }
 
 type ActionQuery struct {

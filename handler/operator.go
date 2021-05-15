@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"omo-msa-approval/model"
-	"omo-msa-approval/publisher"
 
 	"github.com/micro/go-micro/v2/logger"
 	proto "github.com/xtech-cloud/omo-msp-approval/proto/approval"
@@ -49,9 +48,6 @@ func (this *Operator) Join(_ctx context.Context, _req *proto.OperatorJoinRequest
 		}
 	}
 
-	// 发布消息
-	ctx := buildNotifyContext(_ctx, "root")
-	publisher.Publish(ctx, "/operator/join", _req, _rsp)
 	return nil
 }
 
@@ -83,9 +79,6 @@ func (this *Operator) Leave(_ctx context.Context, _req *proto.OperatorLeaveReque
 			return err
 		}
 	}
-	// 发布消息
-	ctx := buildNotifyContext(_ctx, "root")
-	publisher.Publish(ctx, "/operator/leave", _req, _rsp)
 	return nil
 }
 
@@ -129,9 +122,6 @@ func (this *Operator) BatchJoin(_ctx context.Context, _req *proto.OperatorBatchJ
 		_rsp.Status.Code = 2
 		_rsp.Status.Message = fmt.Sprintf("only %v success", successOperators)
 	}
-	// 发布消息
-	ctx := buildNotifyContext(_ctx, "root")
-	publisher.Publish(ctx, "/operator/batchjoin", _req, _rsp)
 	return nil
 }
 
@@ -168,9 +158,6 @@ func (this *Operator) BatchLeave(_ctx context.Context, _req *proto.OperatorBatch
 		_rsp.Status.Code = 2
 		_rsp.Status.Message = fmt.Sprintf("only %v success", successOperators)
 	}
-	// 发布消息
-	ctx := buildNotifyContext(_ctx, "root")
-	publisher.Publish(ctx, "/operator/leave", _req, _rsp)
 	return nil
 }
 

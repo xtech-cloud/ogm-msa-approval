@@ -19,7 +19,7 @@ var ErrWorkflowExists = errors.New("workflow exists")
 var ErrWorkflowNotFound = errors.New("workflow not found")
 
 func (Workflow) TableName() string {
-	return "msa_approval_workflow"
+	return "ogm_approval_workflow"
 }
 
 type WorkflowQuery struct {
